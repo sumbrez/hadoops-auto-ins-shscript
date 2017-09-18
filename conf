@@ -1,0 +1,5 @@
+libpath=/usr/lib
+tmppath=/var/tmp
+master=master
+slaves=(master slave01)
+regionservers=(master slave01)
