@@ -34,7 +34,8 @@ do
 		ssh -t -t hadoop@$ip 'sudo service ssh restart; sudo service sshd restart'
 
 		# 复制安装和配置文件到slave（不含当前文件）
-		scp `ls | grep -v $(basename $0) | grep -v tar.gz` hadoop@$ip:
+		scp `ls | grep -v $(basename $0)` hadoop@$ip:
+		#scp `ls | grep -v $(basename $0) | grep -v tar.gz` hadoop@$ip: # 用于“调试”
 		ssh -t -t hadoop@$ip 'chmod -R 755 *'
 		ssh -t -t hadoop@$ip './run-remain.sh'
 	fi

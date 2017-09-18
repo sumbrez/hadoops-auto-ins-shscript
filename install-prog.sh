@@ -23,3 +23,9 @@ for file in `ls`; do
 		fi
 	done
 done
+
+# 避免和~/.bashrc变量混淆、冲突
+unset JAVA_HOME
+unset HADOOP_HOME
+unset HBASE_HOME
+unset PHOENIX_HOME

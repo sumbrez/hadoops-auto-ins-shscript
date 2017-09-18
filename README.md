@@ -5,7 +5,7 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 ```
 ├── sudopw              # 用于修改、重置NOPASSWD的配置和脚本（未使用）
 │   └── ...
-├── prog                # 用于存放JDK等，使用tar解压，文件名称为示例
+├── prog                # 用于存放JDK等，使用tar解压，文件名称为示例（未使用，组件放在根目录）
 │   ├── (jdk.tar.gz)
 │   ├── (hadoop.tar.gz)
 │   ├── (hbase.tar.gz)
@@ -34,7 +34,6 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 - 解压时将保持外层目录，会出现`$libpath/jdk/jdk1.8.0_144`之类的目录结构，而本脚本要求`jdk`下只有一个jdk版本（其他组件类似）；`install-prog.sh`中将执行`rm -rf`操作，但为方便“调试”，提供了`tar --skip-old-files`操作
 - HBase使用自带zookeeper
 - 使用`~/.bashrc`文件
-- 目前多次执行安装脚本，会在`~/.bashrc`中多次追加环境变量信息
 
 ## 使用步骤
 1. 建立若干ubuntu server节点

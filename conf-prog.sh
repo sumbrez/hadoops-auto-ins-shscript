@@ -12,7 +12,7 @@ HADOOP_HOME=$libpath/hadoop/"`ls $libpath/hadoop`"
 HBASE_HOME=$libpath/hbase/"`ls $libpath/hbase`"
 PHOENIX_HOME=$libpath/phoenix/"`ls $libpath/phoenix`"
 
-source ./set-prog-funs.sh
+# source ./set-env-funs.sh # 不再使用
 # source ~/.bashrc # 无效
 
 # 复制phoenix server jar到hbase lib
@@ -28,7 +28,6 @@ cat >> $HADOOP_HOME/etc/hadoop/slaves << EOF
 $slave
 EOF
 done
-echo "" >> $HADOOP_HOME/etc/hadoop/slaves # 加空行
 
 #set_hadoop_core_site
 cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
@@ -86,7 +85,6 @@ cat >> $HBASE_HOME/conf/regionservers << EOF
 $server
 EOF
 done
-echo "" >> $HBASE_HOME/conf/regionservers # 加空行
 
 #set_hbase_site
 cat > $HBASE_HOME/conf/hbase-site.xml << EOF
