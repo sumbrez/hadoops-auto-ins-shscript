@@ -1,5 +1,7 @@
-libpath=/usr/lib
-tmppath=/var/tmp
+prog_arr=(jdk hadoop hbase phoenix)
+prog_subdir=progs
+libdir=/usr/lib
+tmpdir=/var/tmp
 master=master
 slaves=(master slave01)
 regionservers=(master slave01)

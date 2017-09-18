@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# 配置组件
-
 echo "=== running $(basename $0) ==="
 
 source conf
 
 # ssh u@h 'cmd' 作为no-login shell无法执行source ~/.bashrc，出此下策
-JAVA_HOME=$libpath/jdk/"`ls $libpath/jdk`"
-HADOOP_HOME=$libpath/hadoop/"`ls $libpath/hadoop`"
-HBASE_HOME=$libpath/hbase/"`ls $libpath/hbase`"
-PHOENIX_HOME=$libpath/phoenix/"`ls $libpath/phoenix`"
+JAVA_HOME=$libdir/jdk/"`ls $libdir/jdk`"
+HADOOP_HOME=$libdir/hadoop/"`ls $libdir/hadoop`"
+HBASE_HOME=$libdir/hbase/"`ls $libdir/hbase`"
+PHOENIX_HOME=$libdir/phoenix/"`ls $libdir/phoenix`"
 
 # source ~/.bashrc # 除在本地外无效
 
@@ -35,7 +33,7 @@ cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
 <configuration>
 	<property>
 		<name>hadoop.tmp.dir</name>
-		<value>file:${tmppath}/hadoop</value>
+		<value>file:${tmpdir}/hadoop</value>
 	</property>
 	<property>
 		<name>fs.defaultFS</name>
@@ -60,11 +58,11 @@ cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 	</property>
 	<property>
 		<name>dfs.namenode.name.dir</name>
-		<value>file:${tmppath}/hadoop/dfs/name</value>
+		<value>file:${tmpdir}/hadoop/dfs/name</value>
 	</property>
 	<property>
 		<name>dfs.datanode.data.dir</name>
-		<value>file:${tmppath}/hadoop/dfs/data</value>
+		<value>file:${tmpdir}/hadoop/dfs/data</value>
 	</property>
 </configuration>
 
@@ -72,7 +70,7 @@ EOF
 
 #set_hbase_env
 sed -i "s@.*export JAVA_HOME=.*@export JAVA_HOME=$JAVA_HOME@" $HBASE_HOME/conf/hbase-env.sh
-sed -i "s@.*export HBASE_PID_DIR=.*@export HBASE_PID_DIR=$tmppath/hbase/pids@" $HBASE_HOME/conf/hbase-env.sh
+sed -i "s@.*export HBASE_PID_DIR=.*@export HBASE_PID_DIR=$tmpdir/hbase/pids@" $HBASE_HOME/conf/hbase-env.sh
 sed -i "s@.*export HBASE_MANAGES_ZK=.*@export HBASE_MANAGES_ZK=true@" $HBASE_HOME/conf/hbase-env.sh
 #export HBASE_CLASSPATH=$HBASE_HOME/conf
 
@@ -107,7 +105,7 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 	</property>
 	<property>
 		<name>hbase.zookeeper.property.dataDir</name>
-		<value>file:${tmppath}/zk/zk_data</value>
+		<value>file:${tmpdir}/zk/zk_data</value>
 	</property>
 </configuration>
 
@@ -136,7 +134,7 @@ cat > $PHOENIX_HOME/bin/hbase-site.xml << EOF
 	</property>
 	<property>
 		<name>hbase.zookeeper.property.dataDir</name>
-		<value>file:${tmppath}/zk/zk_data</value>
+		<value>file:${tmpdir}/zk/zk_data</value>
 	</property>
 </configuration>
 

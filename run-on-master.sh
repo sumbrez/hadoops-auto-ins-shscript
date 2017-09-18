@@ -35,7 +35,8 @@ do
 
 		# 复制安装和配置文件到slave（不含当前文件）
 		scp -r `ls | grep -v $(basename $0)` hadoop@$ip:
-		#scp -r `ls | grep -v $(basename $0) | grep -v tar.gz` hadoop@$ip: # 用于“调试”
+		#scp `ls | grep -v $(basename $0)` hadoop@$ip: # 用于“调试”，且存在prog子目录
+		#scp -r `ls | grep -v $(basename $0) | grep -v tar.gz` hadoop@$ip: # 不存在prog子目录
 		ssh -t -t hadoop@$ip 'chmod -R 755 *'
 		ssh -t -t hadoop@$ip './run-remain.sh'
 	fi

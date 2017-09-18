@@ -23,15 +23,17 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 ```
 
 ## 配置文件`conf`说明
-- `libpath=/usr/lib` - 组件安装目录，各组件会自动创建子目录
-- `tmppath=/var/tmp` - 各组件临时文件目录，同样创建子目录
+- `prog_arr=(jdk hadoop hbase phoenix)` - 脚本和组件有较强耦合，放在`conf`文件里意义不大
+- `prog_subdir=progs` - 组件子目录
+- `libdir=/usr/lib` - 组件安装目录，各组件会自动创建子目录
+- `tmpdir=/var/tmp` - 各组件临时文件目录，同样创建子目录
 - `master=master` - master节点hostname
 - `slaves=(master slave01)` - slave节点hostname，必须有括号，各slave以空格隔开
 - `regionservers=(master slave01)` - HBase的regionservers，格式和`slaves`格式相同
 
 
 ## 其他说明
-- 解压时将保持外层目录，会出现`$libpath/jdk/jdk1.8.0_144`之类的目录结构，而本脚本要求`jdk`下只有一个jdk版本（其他组件类似）；`install-prog.sh`中将执行`rm -rf`操作，但为方便“调试”，提供了`tar --skip-old-files`操作
+- 解压时将保持外层目录，会出现`$libdir/jdk/jdk1.8.0_144`之类的目录结构，而本脚本要求`jdk`下只有一个jdk版本（其他组件类似）；`install-prog.sh`中将执行`rm -rf`操作，但为方便“调试”，提供了`tar --skip-old-files`操作
 - HBase使用自带zookeeper
 - 使用`~/.bashrc`文件
 
