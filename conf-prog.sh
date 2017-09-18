@@ -12,8 +12,7 @@ HADOOP_HOME=$libpath/hadoop/"`ls $libpath/hadoop`"
 HBASE_HOME=$libpath/hbase/"`ls $libpath/hbase`"
 PHOENIX_HOME=$libpath/phoenix/"`ls $libpath/phoenix`"
 
-# source ./set-env-funs.sh # 不再使用
-# source ~/.bashrc # 无效
+# source ~/.bashrc # 除在本地外无效
 
 # 复制phoenix server jar到hbase lib
 sudo cp $PHOENIX_HOME/phoenix-*-HBase-*-server.jar $HBASE_HOME/lib/
@@ -72,7 +71,6 @@ cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 EOF
 
 #set_hbase_env
-# hbase: hbase-env.sh
 sed -i "s@.*export JAVA_HOME=.*@export JAVA_HOME=$JAVA_HOME@" $HBASE_HOME/conf/hbase-env.sh
 sed -i "s@.*export HBASE_PID_DIR=.*@export HBASE_PID_DIR=$tmppath/hbase/pids@" $HBASE_HOME/conf/hbase-env.sh
 sed -i "s@.*export HBASE_MANAGES_ZK=.*@export HBASE_MANAGES_ZK=true@" $HBASE_HOME/conf/hbase-env.sh
@@ -115,7 +113,6 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 
 EOF
 
-
 #set_phoenix_hbase_site
 cat > $PHOENIX_HOME/bin/hbase-site.xml << EOF
 <?xml version="1.0"?>
@@ -144,3 +141,9 @@ cat > $PHOENIX_HOME/bin/hbase-site.xml << EOF
 </configuration>
 
 EOF
+
+# 避免和~/.bashrc变量混淆、冲突
+unset JAVA_HOME
+unset HADOOP_HOME
+unset HBASE_HOME
+unset PHOENIX_HOME

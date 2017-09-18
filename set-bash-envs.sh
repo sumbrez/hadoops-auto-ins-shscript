@@ -28,6 +28,7 @@ PHOENIX_HOME=$libpath/phoenix/`ls $libpath/phoenix`
 echo "export PHOENIX_HOME=$PHOENIX_HOME" >> ~/.bashrc
 echo 'export PATH=$PATH:$PHOENIX_HOME/bin' >> ~/.bashrc
 echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}' >> ~/.bashrc
+echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}/'`ls $PHOENIX_HOME | grep -v thin | grep client.jar` >> ~/.bashrc
 
 # 避免和~/.bashrc变量混淆、冲突
 unset JAVA_HOME
@@ -35,4 +36,4 @@ unset HADOOP_HOME
 unset HBASE_HOME
 unset PHOENIX_HOME
 
-source ~/.bashrc # 无效
+source ~/.bashrc # 除在本地外无效

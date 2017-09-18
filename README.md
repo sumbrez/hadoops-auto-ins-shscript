@@ -44,3 +44,4 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 5. 发送文件到master节点并`chmod 755`（slave节点会自动执行`chmod`）
 6. 在master上执行`run-on-master.sh`
 7. 安装完成后为每个机器执行`source ~/.bashrc`
+1. 目前可能需要完成后在master节点执行`ssh hadoop@$hostname`以输入`yes`
