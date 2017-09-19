@@ -15,10 +15,10 @@ PHOENIX_HOME=$libdir/phoenix/"`ls $libdir/phoenix`"
 # 复制phoenix server jar到hbase lib
 sudo cp $PHOENIX_HOME/phoenix-*-HBase-*-server.jar $HBASE_HOME/lib/
 
-#set_hadoop_env
+# set_hadoop_env
 sed -i "s@.*export JAVA_HOME=.*@export JAVA_HOME=$JAVA_HOME@" $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
-#set_hadoop_slaves
+# set_hadoop_slaves
 rm -f $HADOOP_HOME/etc/hadoop/slaves
 for slave in ${slaves[@]}; do
 cat >> $HADOOP_HOME/etc/hadoop/slaves << EOF
@@ -26,7 +26,7 @@ $slave
 EOF
 done
 
-#set_hadoop_core_site
+# set_hadoop_core_site
 cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -43,7 +43,7 @@ cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
 
 EOF
 
-#set_hadoop_hdfs_site
+# set_hadoop_hdfs_site
 cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -68,13 +68,13 @@ cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 
 EOF
 
-#set_hbase_env
+# set_hbase_env
 sed -i "s@.*export JAVA_HOME=.*@export JAVA_HOME=$JAVA_HOME@" $HBASE_HOME/conf/hbase-env.sh
 sed -i "s@.*export HBASE_PID_DIR=.*@export HBASE_PID_DIR=$tmpdir/hbase/pids@" $HBASE_HOME/conf/hbase-env.sh
 sed -i "s@.*export HBASE_MANAGES_ZK=.*@export HBASE_MANAGES_ZK=true@" $HBASE_HOME/conf/hbase-env.sh
-#export HBASE_CLASSPATH=$HBASE_HOME/conf
+# export HBASE_CLASSPATH=$HBASE_HOME/conf
 
-#set_hbase_regionservers
+# set_hbase_regionservers
 rm -f $HBASE_HOME/conf/regionservers
 for server in ${regionservers[@]}; do
 cat >> $HBASE_HOME/conf/regionservers << EOF
@@ -82,7 +82,7 @@ $server
 EOF
 done
 
-#set_hbase_site
+# set_hbase_site
 cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -111,7 +111,7 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 
 EOF
 
-#set_phoenix_hbase_site
+# set_phoenix_hbase_site
 cat > $PHOENIX_HOME/bin/hbase-site.xml << EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>

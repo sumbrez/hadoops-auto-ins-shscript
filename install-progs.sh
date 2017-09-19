@@ -12,7 +12,7 @@ for file in `ls $prog_subdir`; do
 		#if [ $file = *$prog*.tar.gz -o $file = *$prog*.tgz ]; then
 			echo "*** unpacking "$file" to "$libdir/$prog" ***"
 			sudo mkdir -p $libdir/$prog
-			#sudo rm -rf $libdir/$prog/* # 删除原来的，避免出现多个版本影响`ls $libdir/$prog`结果
+			sudo rm -rf $libdir/$prog/* # 删除原来的，避免出现多个版本影响`ls $libdir/$prog`结果
 			sudo rm -rf $tmpdir/$prog/* # 删除原来的tmp内容
 			sudo tar --skip-old-files -zxf $prog_subdir/$file -C $libdir/$prog
 
@@ -21,9 +21,3 @@ for file in `ls $prog_subdir`; do
 		fi
 	done
 done
-
-# 避免和~/.bashrc变量混淆、冲突
-unset JAVA_HOME
-unset HADOOP_HOME
-unset HBASE_HOME
-unset PHOENIX_HOME

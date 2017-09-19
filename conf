@@ -1,3 +1,5 @@
+uname=hadoop
+passwd=hadoop
 prog_arr=(jdk hadoop hbase phoenix)
 prog_subdir=progs
 libdir=/usr/lib

@@ -35,5 +35,3 @@ unset JAVA_HOME
 unset HADOOP_HOME
 unset HBASE_HOME
 unset PHOENIX_HOME
-
-source ~/.bashrc # 除在本地外无效
