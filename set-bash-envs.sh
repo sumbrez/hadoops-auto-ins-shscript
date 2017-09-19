@@ -27,7 +27,7 @@ echo 'export PATH=$PATH:$HBASE_HOME/bin' >> ~/.bashrc
 PHOENIX_HOME=$libdir/phoenix/`ls $libdir/phoenix`
 echo "export PHOENIX_HOME=$PHOENIX_HOME" >> ~/.bashrc
 echo 'export PATH=$PATH:$PHOENIX_HOME/bin' >> ~/.bashrc
-echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}' >> ~/.bashrc
+# echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}' >> ~/.bashrc
 echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}/'`ls $PHOENIX_HOME | grep -v thin | grep client.jar` >> ~/.bashrc
 
 # 避免和~/.bashrc变量混淆、冲突

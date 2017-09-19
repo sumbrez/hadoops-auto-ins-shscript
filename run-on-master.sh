@@ -24,6 +24,16 @@ do
 
 		./run-remain.sh
 		source ~/.bashrc # 除在本机外无效
+		# 用这种方式以便回答一次yes/no
+		/usr/bin/expect <<- EOF
+		set time -1
+		spawn -noecho ssh $uname@$hostname
+		expect {
+			"(yes/no)" { send "yes\r"; exp_continue  }
+			eof
+		}
+		EOF
+		echo ''
 	else # slave
 		# 添加公钥到slave（slave不需要keygen）
 		/usr/bin/expect <<- EOF
@@ -88,7 +98,7 @@ do
 		EOF
 
 		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh'
-		# 更新slave的.bashrc
+		# 更新.bashrc
 		/usr/bin/expect <<- EOF
 		set time -1
 		spawn -noecho ssh $uname@$hostname

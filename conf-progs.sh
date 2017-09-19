@@ -40,7 +40,6 @@ cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
 		<value>hdfs://${master}:9000</value>
 	</property>
 </configuration>
-
 EOF
 
 # set_hadoop_hdfs_site
@@ -65,7 +64,6 @@ cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 		<value>file:${tmpdir}/hadoop/dfs/data</value>
 	</property>
 </configuration>
-
 EOF
 
 # set_hbase_env
@@ -108,7 +106,6 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 		<value>file:${tmpdir}/zk/zk_data</value>
 	</property>
 </configuration>
-
 EOF
 
 # set_phoenix_hbase_site
@@ -137,7 +134,6 @@ cat > $PHOENIX_HOME/bin/hbase-site.xml << EOF
 		<value>file:${tmpdir}/zk/zk_data</value>
 	</property>
 </configuration>
-
 EOF
 
 # 避免和~/.bashrc变量混淆、冲突
