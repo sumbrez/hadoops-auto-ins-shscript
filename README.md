@@ -52,7 +52,7 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 
 ## 关于脚本的补充
 - 在`run-on-master.sh`中master更新自己的hosts后，配置slave便可以使用`$hostname`，但要求hosts中第一个是master
-- 在`run-on-master.sh`中`spawn scp .bashrc`文件时，源文件目录部分使用~/.ssh会报错找不到文件，使用.ssh和/home/$uname/.ssh均不会报错……
+- 在`run-on-master.sh`中`spawn scp .bashrc`文件时，~~源文件目录部分使用~/.ssh会报错找不到文件，使用.ssh和/home/$uname/.ssh均不会报错……~~ 现在使用`spawn sh -c`支持shell命令，~/.ssh写法已可用
 - 在`run-on-master.sh`的expect中使用
     ```
     expect "(yes/no)"
