@@ -26,7 +26,7 @@ do
 		source ~/.bashrc # 除在本机外无效
 		# 用这种方式以便回答一次yes/no
 		/usr/bin/expect <<- EOF
-		set time -1
+		set timeout -1
 		spawn -noecho ssh $uname@$hostname
 		expect {
 			"(yes/no)" { send "yes\r"; exp_continue  }
@@ -37,7 +37,7 @@ do
 	else # slave
 		# 添加公钥到slave（slave不需要keygen）
 		/usr/bin/expect <<- EOF
-		set time -1
+		set timeout -1
 		spawn -noecho ssh $uname@$hostname {if [ ! -d .ssh ]; then mkdir .ssh; fi}
 		expect {
 			"(yes/no)" { send "yes\r"; exp_continue  }
@@ -50,7 +50,7 @@ do
 		# 此处清空原au_keys
 		# cat ~/.ssh/id_rsa.pub | ssh -t -t $uname@$hostname 'cat > ~/.ssh/authorized_keys'
 		/usr/bin/expect <<- EOF
-		set time -1
+		set timeout -1
 		spawn -noecho scp /home/$uname/.ssh/id_rsa.pub $uname@$hostname:~/.ssh/authorized_keys
 		expect {
 			"password:" { send "$passwd\r"; exp_continue }
@@ -61,7 +61,7 @@ do
 
 		# 复制本机的id_rsa.pub到slave
 		/usr/bin/expect <<- EOF
-		set time -1
+		set timeout -1
 		spawn -noecho ssh -t -t $uname@$hostname {sudo service ssh restart; sudo service sshd restart}
 		expect {
 			"password:" { send "$passwd\r"; exp_continue }
@@ -77,7 +77,7 @@ do
 		# 复制根目录下文件
 		for file in `ls | grep -v $(basename $0)`; do
 			/usr/bin/expect <<- EOF
-			set time -1
+			set timeout -1
 			spawn -noecho scp $file $uname@$hostname:
 			expect {
 				"password:" { send "$passwd\r"; exp_continue }
@@ -89,7 +89,7 @@ do
 
 		# 复制$prog_subdir文件夹
 		/usr/bin/expect <<- EOF
-		set time -1
+		set timeout -1
 		spawn -noecho scp -r $prog_subdir $uname@$hostname:
 		expect {
 			"password:" { send "$passwd\r"; exp_continue }
@@ -100,7 +100,7 @@ do
 		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh'
 		# 更新.bashrc
 		/usr/bin/expect <<- EOF
-		set time -1
+		set timeout -1
 		spawn -noecho ssh $uname@$hostname
 		expect "password:" { send "$passwd\r" }
 		expect ":~$"
