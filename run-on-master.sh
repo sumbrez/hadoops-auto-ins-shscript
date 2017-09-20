@@ -26,10 +26,11 @@ do
 		source ~/.bashrc # 除在本机外无效
 		# 用这种方式以便回答一次yes/no
 		/usr/bin/expect <<- EOF
-		set timeout -1
+		set timeout 1
 		spawn -noecho ssh $uname@$hostname
 		expect {
-			"(yes/no)" { send "yes\r"; exp_continue  }
+			"(yes/no)" { send "yes\r"; exp_continue }
+			":~$" { send "logout\r"; exp_continue }
 			eof
 		}
 		EOF
@@ -51,7 +52,7 @@ do
 		# cat ~/.ssh/id_rsa.pub | ssh -t -t $uname@$hostname 'cat > ~/.ssh/authorized_keys'
 		/usr/bin/expect <<- EOF
 		set timeout -1
-		spawn -noecho scp /home/$uname/.ssh/id_rsa.pub $uname@$hostname:~/.ssh/authorized_keys
+		spawn -noecho sh -c {scp ~/.ssh/id_rsa.pub $uname@$hostname:~/.ssh/authorized_keys}
 		expect {
 			"password:" { send "$passwd\r"; exp_continue }
 			eof
@@ -74,33 +75,22 @@ do
 		sleep 1s
 
 		# 复制安装和配置文件到slave（不含当前文件）
-		# 复制根目录下文件
-		for file in `ls | grep -v $(basename $0)`; do
-			/usr/bin/expect <<- EOF
-			set timeout -1
-			spawn -noecho scp $file $uname@$hostname:
-			expect {
-				"password:" { send "$passwd\r"; exp_continue }
-				eof
-			}
-			EOF
-		done
-		echo ''
-
-		# 复制$prog_subdir文件夹
+		# spawn -c依然不支持$(basename $0)
 		/usr/bin/expect <<- EOF
 		set timeout -1
-		spawn -noecho scp -r $prog_subdir $uname@$hostname:
+		spawn -noecho sh -c {scp * $uname@$hostname:} # 不复制目录
+		#spawn -noecho sh -c {scp -r * $uname@$hostname:} # 复制目录
 		expect {
 			"password:" { send "$passwd\r"; exp_continue }
 			eof
 		}
 		EOF
+		echo ''
 
 		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh'
 		# 更新.bashrc
 		/usr/bin/expect <<- EOF
-		set timeout -1
+		set timeout 1
 		spawn -noecho ssh $uname@$hostname
 		expect "password:" { send "$passwd\r" }
 		expect ":~$"
