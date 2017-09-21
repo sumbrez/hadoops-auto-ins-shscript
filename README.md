@@ -32,6 +32,7 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 - `master=master` - master节点hostname
 - `slaves=(master slave01)` - slave节点hostname，必须有括号，各slave以空格隔开
 - `regionservers=(master slave01)` - HBase的regionservers，格式和`slaves`格式相同
+- `quorums=(master slave01)` - Zookeeper集群的地址列表，格式和`slaves`格式相同，脚本会自动按照`hbase.zookeeper.quorum`格式要求转换
 
 ## 使用步骤
 1. 建立若干ubuntu server节点

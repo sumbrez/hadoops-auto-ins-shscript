@@ -7,3 +7,4 @@ tmpdir=/var/tmp
 master=master
 slaves=(master slave01)
 regionservers=(master slave01)
+quorums=(master slave01)

@@ -81,6 +81,10 @@ EOF
 done
 
 # set_hbase_site
+quorum_val=''
+for quorum in ${quorums[@]}; do
+	$quorum_val=$quorum_val','$quorum
+done
 cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -99,7 +103,7 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 	</property>
 	<property>
 		<name>hbase.zookeeper.quorum</name>
-		<value>${master}</value>
+		<value>${quorum_val}</value>
 	</property>
 	<property>
 		<name>hbase.zookeeper.property.dataDir</name>
@@ -109,32 +113,7 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 EOF
 
 # set_phoenix_hbase_site
-cat > $PHOENIX_HOME/bin/hbase-site.xml << EOF
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-<configuration>
-	<property>
-		<name>hbase.regionserver.wal.codec</name>
-		<value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
-	</property>
-	<property>
-		<name>hbase.rootdir</name>
-		<value>hdfs://${master}:9000/hbase</value>
-	</property>
-	<property>
-		<name>hbase.cluster.distributed</name>
-		<value>true</value>
-	</property>
-	<property>
-		<name>hbase.zookeeper.quorum</name>
-		<value>${master}</value>
-	</property>
-	<property>
-		<name>hbase.zookeeper.property.dataDir</name>
-		<value>file:${tmpdir}/zk/zk_data</value>
-	</property>
-</configuration>
-EOF
+cp $HBASE_HOME/conf/hbase-site.xml $PHOENIX_HOME/bin/hbase-site.xml
 
 # 避免和~/.bashrc变量混淆、冲突
 unset JAVA_HOME
