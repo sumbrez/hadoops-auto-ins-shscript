@@ -2,7 +2,7 @@
 
 echo "=== running $(basename $0) ==="
 
-source conf
+source config
 
 # 删除原有的环境变量
 sed '/JAVA_HOME/'d  ~/.bashrc | sed '/HADOOP_HOME/d' | sed '/HBASE_HOME/d' | sed '/PHOENIX_HOME/d' > ~/.bashrc.tmp

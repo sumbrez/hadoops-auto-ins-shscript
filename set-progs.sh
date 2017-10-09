@@ -2,7 +2,7 @@
 
 echo "=== running $(basename $0) ==="
 
-source conf
+source config
 
 # ssh u@h 'cmd' 作为no-login shell无法执行source ~/.bashrc，出此下策
 JAVA_HOME=$libdir/jdk/"`ls $libdir/jdk`"
@@ -108,6 +108,32 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 	<property>
 		<name>hbase.zookeeper.property.dataDir</name>
 		<value>file:${tmpdir}/zk/zk_data</value>
+	</property>
+	
+	<!-- 二级索引，master -->
+	<property>
+		<name>hbase.master.loadbalancer.class</name>
+		<value>org.apache.phoenix.hbase.index.balancer.IndexLoadBalancer</value>
+	</property>
+	<property>
+		<name>hbase.coprocessor.master.classes</name>
+		<value>org.apache.phoenix.hbase.index.master.IndexMasterObserver</value>
+	</property>
+
+	<!-- 二级索引，regionserver -->
+	<property>
+		<name>hbase.region.server.rpc.scheduler.factory.class</name>
+		<value>org.apache.hadoop.hbase.ipc.PhoenixRpcSchedulerFactory</value>
+		<description>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates</description>
+	</property>
+	<property>
+		<name>hbase.rpc.controllerfactory.class</name>
+		<value>org.apache.hadoop.hbase.ipc.controller.ServerRpcControllerFactory</value>
+		<description>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates</description>
+	</property>
+	<property>
+		<name>hbase.coprocessor.regionserver.classes</name>
+		<value>org.apache.hadoop.hbase.regionserver.LocalIndexMerger</value>
 	</property>
 </configuration>
 EOF

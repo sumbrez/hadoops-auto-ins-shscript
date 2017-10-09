@@ -2,7 +2,7 @@
 
 # 先 chmod -R 755 * 取得权限
 
-source conf
+source config
 
 while read line
 do

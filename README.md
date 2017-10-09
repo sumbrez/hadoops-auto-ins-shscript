@@ -10,8 +10,7 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 │   └── (*phoenix*.tar.gz)
 ├── sudopw              # 用于修改、重置NOPASSWD的配置和脚本（未使用）
 │   └── ...
-├── conf                # 配置文件
-├── conf-progs.sh       # 用于配置组件
+├── config              # 配置文件
 ├── hosts               # 按照hosts格式列出的集群信息
 ├── hosts-ext           # 自带的额外hosts信息（IPv6）
 ├── install-progs.sh    # 安装组件
@@ -19,13 +18,14 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 ├── run-on-master.sh    # 入口，运行在master节点
 ├── run-remain.sh       # 运行初始之外的其他脚本
 ├── set-bash-envs.sh    # 设置环境变量
-└── set-hosts.sh        # 设置hosts信息到/etc/hosts
+├── set-hosts.sh        # 设置hosts信息到/etc/hosts
+└── set-progs.sh        # 用于配置组件
 ```
 
-## 配置文件`conf`说明
+## 配置文件`config`说明
 - `uname=hadoop` - 各节点用户名（需要统一）
 - `passwd=hadoop` - 各节点密码（需要统一）
-- `prog_arr=(jdk hadoop hbase phoenix)` - 脚本和组件有较强耦合，放在`conf`文件里意义不大
+- `prog_arr=(jdk hadoop hbase phoenix)` - 脚本和组件有较强耦合，放在`config`文件里意义不大
 - `prog_subdir=progs` - 组件子目录
 - `libdir=/usr/lib` - 组件安装目录，各组件会自动创建子目录
 - `tmpdir=/var/tmp` - 各组件临时文件目录，同样创建子目录

@@ -2,7 +2,7 @@
 
 echo "=== running $(basename $0) ==="
 
-source conf
+source config
 
 # 解压
 for file in `ls $prog_subdir`; do
