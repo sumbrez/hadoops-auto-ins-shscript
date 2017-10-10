@@ -33,7 +33,7 @@ cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
 <configuration>
 	<property>
 		<name>hadoop.tmp.dir</name>
-		<value>file:${tmpdir}/hadoop</value>
+		<value>${tmpdir}/hadoop</value>
 	</property>
 	<property>
 		<name>fs.defaultFS</name>
@@ -57,11 +57,11 @@ cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 	</property>
 	<property>
 		<name>dfs.namenode.name.dir</name>
-		<value>file:${tmpdir}/hadoop/dfs/name</value>
+		<value>${tmpdir}/hadoop/dfs/name</value>
 	</property>
 	<property>
 		<name>dfs.datanode.data.dir</name>
-		<value>file:${tmpdir}/hadoop/dfs/data</value>
+		<value>${tmpdir}/hadoop/dfs/data</value>
 	</property>
 </configuration>
 EOF
@@ -83,14 +83,15 @@ done
 # set_hbase_site
 quorum_val=''
 for quorum in ${quorums[@]}; do
-	$quorum_val=$quorum_val','$quorum
+	quorum_val="$quorum_val,$quorum"
 done
+quorum_val=${quorum_val#?}
 cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
 	<property>
-		<name>hbase.regionserver.wal.codec</name>
+		<name>hbase.regionserver.wal.codec</name> <!-- phoenix 4.8+版本只需此配置，不需要额外的二级索引配置 -->
 		<value>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec</value>
 	</property>
 	<property>
@@ -107,33 +108,17 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 	</property>
 	<property>
 		<name>hbase.zookeeper.property.dataDir</name>
-		<value>file:${tmpdir}/zk/zk_data</value>
-	</property>
-	
-	<!-- 二级索引，master -->
-	<property>
-		<name>hbase.master.loadbalancer.class</name>
-		<value>org.apache.phoenix.hbase.index.balancer.IndexLoadBalancer</value>
-	</property>
-	<property>
-		<name>hbase.coprocessor.master.classes</name>
-		<value>org.apache.phoenix.hbase.index.master.IndexMasterObserver</value>
+		<value>${tmpdir}/zk/zk_data</value>
 	</property>
 
-	<!-- 二级索引，regionserver -->
+	<!-- schema -->
 	<property>
-		<name>hbase.region.server.rpc.scheduler.factory.class</name>
-		<value>org.apache.hadoop.hbase.ipc.PhoenixRpcSchedulerFactory</value>
-		<description>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates</description>
+		<name>phoenix.schema.isNamespaceMappingEnabled</name>
+		<value>true</value>
 	</property>
 	<property>
-		<name>hbase.rpc.controllerfactory.class</name>
-		<value>org.apache.hadoop.hbase.ipc.controller.ServerRpcControllerFactory</value>
-		<description>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates</description>
-	</property>
-	<property>
-		<name>hbase.coprocessor.regionserver.classes</name>
-		<value>org.apache.hadoop.hbase.regionserver.LocalIndexMerger</value>
+		<name>phoenix.schema.mapSystemTablesToNamespace</name>
+		<value>true</value>
 	</property>
 </configuration>
 EOF

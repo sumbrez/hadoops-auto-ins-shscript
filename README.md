@@ -3,7 +3,7 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 
 ## 目录结构和文件说明
 ```
-├── progs                # 用于存放JDK等，使用tar解压，文件名称为示例
+├── progs               # 用于存放JDK等，使用tar解压，文件名称为示例
 │   ├── (*jdk*.tar.gz)
 │   ├── (*hadoop*.tar.gz)
 │   ├── (*hbase*.tar.gz)

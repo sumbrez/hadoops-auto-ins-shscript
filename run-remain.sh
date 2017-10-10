@@ -5,7 +5,7 @@ echo "=== running $(basename $0) ==="
 sudo chown hadoop:hadoop .viminfo
 
 ./set-hosts.sh
-./install-progs.sh
+#./install-progs.sh
 ./set-progs.sh
 ./set-bash-envs.sh # source ~/.bashrc无效，已无必要放在conf-progs.sh前
 
