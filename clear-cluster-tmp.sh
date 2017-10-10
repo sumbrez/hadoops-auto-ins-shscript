@@ -10,8 +10,8 @@ do
 	hostname=`echo $line | awk '{print $2}'`
 
 	if [ $hostname = `hostname` ]; then # 本机
-		rm -r $tmpdir/h*
+		rm -r $tmpdir/h*; rm -r $tmpdir/zk
 	else # slave
-		ssh -t -t $uname@$hostname "rm -r $tmpdir/h*"
+		ssh -t -t $uname@$hostname "rm -r $tmpdir/h*; rm -r $tmpdir/zk"
 	fi
 done < hosts
