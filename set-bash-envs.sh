@@ -12,23 +12,25 @@ rm ~/.bashrc.tmp
 # 设置新的环境变量
 JAVA_HOME=$libdir/jdk/`ls $libdir/jdk`
 echo "export JAVA_HOME=$JAVA_HOME" >> ~/.bashrc
-echo 'export JRE_HOME=${JAVA_HOME}/jre' >> ~/.bashrc
-echo 'export PATH=${JAVA_HOME}/bin:${JRE_HOME}/lib:$PATH' >> ~/.bashrc
-echo 'export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib' >> ~/.bashrc
+echo 'export JRE_HOME=$JAVA_HOME/jre' >> ~/.bashrc
+echo 'export PATH=$JAVA_HOME/bin:$JRE_HOME/lib:$PATH' >> ~/.bashrc
+echo 'export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib' >> ~/.bashrc
 
 HADOOP_HOME=$libdir/hadoop/`ls $libdir/hadoop`
 echo "export HADOOP_HOME=$HADOOP_HOME" >> ~/.bashrc
-echo 'export PATH=${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin:$PATH' >> ~/.bashrc
+echo 'export PATH=$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH' >> ~/.bashrc
 
 HBASE_HOME=$libdir/hbase/`ls $libdir/hbase`
 echo "export HBASE_HOME=$HBASE_HOME" >> ~/.bashrc
 echo 'export PATH=$PATH:$HBASE_HOME/bin' >> ~/.bashrc
+echo 'export CLASSPATH=$CLASSPATH:$HBASE_HOME/conf' >> ~/.bashrc # 需要将hbase-site.xml加入CP以支持namespace/schema
 
 PHOENIX_HOME=$libdir/phoenix/`ls $libdir/phoenix`
 echo "export PHOENIX_HOME=$PHOENIX_HOME" >> ~/.bashrc
 echo 'export PATH=$PATH:$PHOENIX_HOME/bin' >> ~/.bashrc
-# echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}' >> ~/.bashrc
-echo 'export CLASSPATH=${CLASSPATH}:${PHOENIX_HOME}/'`ls $PHOENIX_HOME | grep -v thin | grep client.jar` >> ~/.bashrc
+# echo 'export CLASSPATH=$CLASSPATH:$PHOENIX_HOME' >> ~/.bashrc
+# 将client.jar加入CP以便直接运行sqlline.py
+echo 'export CLASSPATH=$CLASSPATH:$PHOENIX_HOME/'`ls $PHOENIX_HOME | grep -v thin | grep client.jar` >> ~/.bashrc
 
 # 避免和~/.bashrc变量混淆、冲突
 unset JAVA_HOME
