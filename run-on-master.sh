@@ -1,6 +1,11 @@
 #!/bin/bash
 
+# 可以附加参数'noins'指明不安装progs，但要求必须已安装过
+# 此参数直接传给run-remain.sh来控制是否调用install-progs.sh
+
 # 先 chmod -R 755 * 取得权限
+
+ins_ornot=$1 # 值为noins则不安装配置jdk等，涵盖不复制tar包到slave
 
 source config
 
@@ -19,10 +24,11 @@ do
 		# 重启slave sshd服务
 		echo "*** restarting $hostname sshd ***"
 		sleep 1s
+
 		sudo service ssh restart
 		sudo service sshd restart
 
-		./run-remain.sh
+		./run-remain.sh ins_ornot
 		source ~/.bashrc # 除在本机外无效
 		# 用这种方式以便回答一次yes/no
 		/usr/bin/expect <<- EOF
@@ -74,6 +80,8 @@ do
 		echo "*** restarting $hostname sshd ***"
 		sleep 1s
 
+		### 到此为止如果正确，接下来scp、ssh等时应当不再需要输入密码 ###
+
 		# 复制安装和配置文件到slave（不含当前文件）
 		# spawn -c依然不支持$(basename $0)
 		/usr/bin/expect <<- EOF
@@ -87,8 +95,8 @@ do
 		EOF
 		echo ''
 
-		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh'
-		# 更新.bashrc
+		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh ins_ornot'
+		# ssh到slave上更新.bashrc
 		/usr/bin/expect <<- EOF
 		set timeout 1
 		spawn -noecho ssh $uname@$hostname

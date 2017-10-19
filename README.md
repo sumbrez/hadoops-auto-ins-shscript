@@ -1,8 +1,20 @@
 # Hadoops-auto-ins-shscript
-JDK、Hadoop、HBase、Phoenix集群自动部署脚本
+JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
+
+## 本脚本使用的JDK等版本
+- apache-phoenix-4.11.0-HBase-1.2-bin.tar.gz
+- hbase-1.2.6-bin.tar.gz
+- hadoop-2.8.1.tar.gz
+- jdk-8u144-linux-x64.tar.gz
+- lzo-2.10.tar.gz
+- hadoop-lzo-release-0.4.20.tar.gz # twitter hadoop-lzo，下载后需要改名为hadoop-lzo*.tar.gz
+
 
 ## 目录结构和文件说明
 ```
+├── lzo                 # 用于存放lzo和hadoop-lzo，使用tar解压，之后需要编译
+|   ├── (lzo*.tar.gz)
+|   └── (hadoop-lzo*.tar.gz)
 ├── progs               # 用于存放JDK等，使用tar解压，文件名称为示例
 │   ├── (*jdk*.tar.gz)
 │   ├── (*hadoop*.tar.gz)
@@ -13,13 +25,15 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 ├── config              # 配置文件
 ├── hosts               # 按照hosts格式列出的集群信息
 ├── hosts-ext           # 自带的额外hosts信息（IPv6）
+├── install-lzo.sh      # 安装lzo等，运行在master节点
 ├── install-progs.sh    # 安装组件
 ├── README.md           # 本说明文件
 ├── run-on-master.sh    # 入口，运行在master节点
 ├── run-remain.sh       # 运行初始之外的其他脚本
 ├── set-bash-envs.sh    # 设置环境变量
+├── set-lzo.sh          # 配置lzo
 ├── set-hosts.sh        # 设置hosts信息到/etc/hosts
-└── set-progs.sh        # 用于配置组件
+└── set-progs.sh        # 配置组件
 ```
 
 ## 配置文件`config`说明
@@ -41,15 +55,16 @@ JDK、Hadoop、HBase、Phoenix集群自动部署脚本
 4. 为用户赋予sudo权限和NOPASSWD权限
 5. 为每个节点配置hostname和ip并保持和配置文件hosts一致
 6. 发送文件到master节点并`chmod -R 755 *`（slave节点会自动执行`chmod`）
-7. 在master上执行`run-on-master.sh`，正确执行则不需要回答ssh的yes/no或者输入用户密码
+7. 在master上执行`./run-on-master.sh`，正确执行则不需要回答ssh的yes/no或者输入用户密码
 8. ~~安装完成后为每个机器执行`source ~/.bashrc`~~ 现在使用expect+ssh登录的方式执行此句，但好像仍然没用
-9. 脚本中使用`ssh $uname@$hostname`方式，之后无论使用`ssh $uname@$hostname`还是`@$ip`都不需要回答yes
+9. 安装lzo，在master上执行`./install-lzo.sh`
 
 ## 其他说明
 - 文件默认放在用户文件夹根目录
 - 解压时将保持外层目录，会出现`$libdir/jdk/jdk1.8.0_144`之类的目录结构，而本脚本要求`jdk`下只有一个jdk版本（其他组件类似）；`install-prog.sh`中将执行`rm -rf`操作，但为方便“调试”，提供了`tar --skip-old-files`操作，同时提供了`scp`到slave节点的相应的“调试”操作
 - HBase使用自带zookeeper
 - 使用`~/.bashrc`文件
+- 脚本中使用`ssh $uname@$hostname`方式，之后无论使用`ssh $uname@$hostname`还是`@$ip`都不需要回答yes
 
 ## 关于脚本的补充
 - 在`run-on-master.sh`中master更新自己的hosts后，配置slave便可以使用`$hostname`，但要求hosts中第一个是master
