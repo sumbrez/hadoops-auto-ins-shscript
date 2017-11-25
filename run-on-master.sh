@@ -28,7 +28,7 @@ do
 		sudo service ssh restart
 		sudo service sshd restart
 
-		./run-remain.sh ins_ornot
+		./run-remain.sh $ins_ornot
 		source ~/.bashrc # 除在本机外无效
 		# 用这种方式以便回答一次yes/no
 		/usr/bin/expect <<- EOF
@@ -95,7 +95,7 @@ do
 		EOF
 		echo ''
 
-		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh ins_ornot'
+		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh $ins_ornot'
 		# ssh到slave上更新.bashrc
 		/usr/bin/expect <<- EOF
 		set timeout 1
