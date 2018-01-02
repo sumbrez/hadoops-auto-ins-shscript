@@ -51,13 +51,14 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 ## 使用步骤
 1. 建立若干ubuntu server节点
 2. 为每个节点建立统一名称的用户
-3. 更新源，安装vim、ssh server、python，为master安装expect
-4. 为用户赋予sudo权限和NOPASSWD权限
+3. 更新源，安装vim、ssh server、~~python~~，为master安装expect
+4. 为用户赋予sudo权限和NOPASSWD权限  
+（以上两步可以通过运行`prepare.sh`实现）
 5. 为每个节点配置hostname和ip并保持和配置文件hosts一致
 6. 发送文件到master节点并`chmod -R 755 *`（slave节点会自动执行`chmod`）
 7. 在master上执行`./run-on-master.sh`，正确执行则不需要回答ssh的yes/no或者输入用户密码
-8. ~~安装完成后为每个机器执行`source ~/.bashrc`~~ 现在使用expect+ssh登录的方式执行此句，但好像仍然没用
-9. 安装lzo，在master上执行`./install-lzo.sh`
+8. 安装完成后为每个机器执行`source ~/.bashrc`（现在使用expect+ssh登录的方式执行此句，但好像仍然没用）
+9. 安装lzo，在master上执行`./install-lzo.sh`（独立可选，简单起见不运行）
 
 ## 其他说明
 - 文件默认放在用户文件夹根目录

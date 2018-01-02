@@ -39,8 +39,8 @@ else
 
 	# 编译、安装hadoop-lzo
 	sudo apt-get update
-	sudo apt-get install lzop
-	sudo apt-get install maven # lzo-2.10使用maven而不是ant
+	sudo apt-get -y install lzop
+	sudo apt-get -y install maven # lzo-2.10使用maven而不是ant
 
 	hlzo_file=`ls | grep hadoop-lzo*.tar.gz` # hadoop lzo tar包
 	tar -zxf $hlzo_file
@@ -91,7 +91,7 @@ do
 		ssh -t -t $uname@$hostname 'sudo cp ~/lzo/lzo_lib/liblzo* /usr/lib'
 
 		# apt安装lzop
-		#ssh -t -t $uname@$hostname 'sudo apt-get update; sudo apt-get install lzop'
+		#ssh -t -t $uname@$hostname 'sudo apt-get update; sudo apt-get -y install lzop'
 
 		ssh -t -t $uname@$hostname 'mkdir -p ~/lzo/hlzo_target'
 		# 将本机编译出的hadoop lzo的文件复制到slave
