@@ -20,7 +20,7 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 │   ├── (*hadoop*.tar.gz)
 │   ├── (*hbase*.tar.gz)
 │   └── (*phoenix*.tar.gz)
-├── sudopw              # 用于修改、重置NOPASSWD的配置和脚本（未使用）
+├── sudopw              # 用于修改、重置NOPASSWD的配置和脚本（未使用，将来将被单一脚本替代）
 │   └── ...
 ├── config              # 配置文件
 ├── hosts               # 按照hosts格式列出的集群信息
@@ -67,6 +67,7 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 - HBase使用自带zookeeper
 - 使用`~/.bashrc`文件
 - 脚本中使用`ssh $uname@$hostname`方式，之后无论使用`ssh $uname@$hostname`还是`@$ip`都不需要回答yes
+- 新的`prepare.sh`中加入`sed`命令修改`sudoers`文件中相关参数，`sudopw`文件夹可能会被永久取消
 
 ## 关于脚本的补充
 - 在`run-on-master.sh`中master更新自己的hosts后，配置slave便可以使用`$hostname`，但要求hosts中第一个是master
