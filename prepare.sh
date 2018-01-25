@@ -2,6 +2,8 @@
 
 echo "=== running $(basename $0) ==="
 
+source config
+
 # 备份原来的更新源
 if [ ! -e "/etc/apt/sources.list.backup" ]; then
     sudo mv /etc/apt/sources.list /etc/apt/sources.list.backup
@@ -33,6 +35,6 @@ sudo apt-get -y install openssh-server
 # 安装expect
 sudo apt-get -y install expect
 
-# sudo权限和NOPASSWD权限 # sudo adduser hadoop sudo
-sed -i "s/hadoop.*ALL=(ALL:ALL).*ALL/hadoop\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
+# sudo权限和NOPASSWD权限 # sudo adduser $uname sudo
+sed -i "s/${uname}.*ALL=(ALL:ALL).*ALL/${uname}\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
 sed -i "s/.*sudo.*ALL=(ALL:ALL).*ALL/sudo\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers # server版需要此操作

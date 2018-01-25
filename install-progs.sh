@@ -16,7 +16,7 @@ for file in `ls $prog_subdir`; do
 			sudo rm -rf $tmpdir/$prog/* # 删除原来的tmp内容
 			sudo tar --skip-old-files -zxf $prog_subdir/$file -C $libdir/$prog
 
-			sudo chown -R hadoop:hadoop $libdir/$prog
+			sudo chown -R $uname:$uname $libdir/$prog
 			sudo chmod -R 755 $libdir/$prog
 		fi
 	done
