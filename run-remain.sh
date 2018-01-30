@@ -9,8 +9,6 @@ source config
 
 ins_ornot=$1 # 值为noins则不安装配置jdk等，涵盖不复制tar包到slave
 
-sudo chown $uname:$uname .viminfo
-
 ./set-hosts.sh
 if [[ $ins_ornot != noins ]]; then
 	./install-progs.sh
