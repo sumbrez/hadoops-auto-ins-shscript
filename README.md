@@ -5,7 +5,7 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 - apache-phoenix-4.11.0-HBase-1.2-bin.tar.gz
 - hbase-1.2.6-bin.tar.gz
 - hadoop-2.8.1.tar.gz
-- jdk-8u144-linux-x64.tar.gz
+- jdk-8u151-linux-x64.tar.gz (jdk8均可)
 - lzo-2.10.tar.gz
 - hadoop-lzo-release-0.4.20.tar.gz # twitter hadoop-lzo，下载后需要改名为hadoop-lzo*.tar.gz
 
@@ -44,9 +44,9 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 - `libdir=/usr/lib` - 组件安装目录，各组件会自动创建子目录
 - `tmpdir=/var/tmp` - 各组件临时文件目录，同样创建子目录
 - `master=master` - master节点hostname
-- `slaves=(master slave01)` - slave节点hostname，必须有括号，各slave以空格隔开，可以只有一个节点
-- `regionservers=(master slave01)` - HBase的regionservers，格式和`slaves`格式相同
-- `quorums=(master slave01)` - Zookeeper集群的地址列表，格式和`slaves`格式相同，脚本会自动按照`hbase.zookeeper.quorum`格式要求转换
+- `slaves=(master)` - slave节点hostname，必须有括号，各slave以空格隔开，可以只有一个节点
+- `regionservers=(master)` - HBase的regionservers，格式和`slaves`格式相同
+- `quorums=(master)` - Zookeeper集群的地址列表，格式和`slaves`格式相同，脚本会自动按照`hbase.zookeeper.quorum`格式要求转换
 
 ## 使用步骤
 1. 建立若干ubuntu server节点
