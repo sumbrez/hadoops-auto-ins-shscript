@@ -79,7 +79,7 @@ do
 	hostname=`echo $line | awk '{print $2}'`
 	echo "-------- configuring lzos on $hostname@$ip --------"
 
-	if [ $hostname = `hostname` ]; then # 本机
+	if [ "$hostname" = `hostname` ]; then # 本机
 		cd ..
 		./set-lzo.sh
 		cd lzo

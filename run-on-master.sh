@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# 可以附加参数'noins'指明不安装progs，但要求必须已安装过
+# 可以附加参数'nocover'指明不安装progs，但要求必须已安装过
 # 此参数直接传给run-remain.sh来控制是否调用install-progs.sh
 
 # 先 chmod -R 755 * 取得权限
 
-ins_ornot=$1 # 值为noins则不安装配置jdk等，涵盖不复制tar包到slave
+ins_ornot=$1 # 值为nocover则不安装配置jdk等，涵盖不复制tar包到slave
 
 source config
 
@@ -15,7 +15,7 @@ do
 	hostname=`echo $line | awk '{print $2}'`
 	echo "-------- configuring $hostname@$ip --------"
 
-	if [ $hostname = `hostname` ]; then # 本机
+	if [ "$hostname" = `hostname` ]; then # 本机
 		# 生成本机ssh key
 		rm ~/.ssh/*
 		ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa

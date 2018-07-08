@@ -19,7 +19,8 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 │   ├── (*jdk*.tar.gz)
 │   ├── (*hadoop*.tar.gz)
 │   ├── (*hbase*.tar.gz)
-│   └── (*phoenix*.tar.gz)
+│   ├── (*phoenix*.tar.gz)
+│   └── (*pig*.tar.gz)
 ├── sudopw              # 用于修改、重置NOPASSWD的配置和脚本（未使用，将来将被单一脚本替代）
 │   └── ...
 ├── config              # 配置文件
@@ -57,7 +58,7 @@ JDK、Hadoop、HBase、Phoenix、lzo集群自动部署脚本
 5. 为每个节点配置hostname和ip并保持和配置文件hosts一致
 6. 发送文件到master节点并`chmod -R 755 *`（slave节点会自动执行`chmod`）
 7. 在master上执行`./run-on-master.sh`，正确执行则不需要回答ssh的yes/no或者输入用户密码  
-（如果已经解压好各tar.gz包，可执行`./run-on-master.sh noins`以跳过解压缩tar.gz步骤）
+（可附带`nocover`参数以跳过已解压过的文件）
 8. 安装完成后为每个机器执行`source ~/.bashrc`（现在使用expect+ssh登录的方式执行此句，但好像仍然没用）
 9. 安装lzo，在master上执行`./install-lzo.sh`（独立可选，简单起见不运行）
 

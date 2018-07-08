@@ -4,6 +4,8 @@ echo "=== running $(basename $0) ==="
 
 source config
 
+ins_ornot=$1
+
 # 解压
 for file in `ls $prog_subdir`; do
 	for prog in ${prog_arr[@]}; do
@@ -12,8 +14,10 @@ for file in `ls $prog_subdir`; do
 		#if [ $file = *$prog*.tar.gz -o $file = *$prog*.tgz ]; then
 			echo "*** unpacking "$file" to "$libdir/$prog" ***"
 			sudo mkdir -p $libdir/$prog
-			sudo rm -rf $libdir/$prog/* # 删除原来的，避免出现多个版本影响`ls $libdir/$prog`结果
-			sudo rm -rf $tmpdir/$prog/* # 删除原来的tmp内容
+			if [[ $ins_ornot != nocover ]]; then
+				sudo rm -rf $libdir/$prog/* # 删除原来的，避免出现多个版本影响`ls $libdir/$prog`结果
+				sudo rm -rf $tmpdir/$prog/* # 删除原来的tmp内容
+			fi
 			sudo tar --skip-old-files -zxf $prog_subdir/$file -C $libdir/$prog
 
 			sudo chown -R $uname:$uname $libdir/$prog
