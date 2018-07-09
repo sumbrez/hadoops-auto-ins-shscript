@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 安装ssh-server，ssh-server安装手动执行才能scp其他文件
+# sudo apt-get -y install openssh-server
+
 echo "=== running $(basename $0) ==="
 
 source config
@@ -29,12 +32,12 @@ sudo apt-get update
 sudo apt-get -y remove vim-common
 sudo apt-get -y install vim
 
-# 安装ssh-server
-sudo apt-get -y install openssh-server
-
 # 安装expect
 sudo apt-get -y install expect
 
 # sudo权限和NOPASSWD权限 # sudo adduser $uname sudo
-sed -i "s/${uname}.*ALL=(ALL:ALL).*ALL/${uname}\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
-sed -i "s/.*sudo.*ALL=(ALL:ALL).*ALL/sudo\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers # server版需要此操作
+sudp cp /etc/sudoers /etc/sudoers.backup
+sudo sed -i "s/${uname}.*ALL=(ALL:ALL).*ALL/${uname}\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
+sudo sed -i "/${uname}/d" /etc/sudoers
+sudo echo "${uname}\tALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+sudo sed -i "s/.*sudo.*ALL=(ALL:ALL).*ALL/sudo\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers # server版需要此操作

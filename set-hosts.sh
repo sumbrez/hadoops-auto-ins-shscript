@@ -4,10 +4,10 @@ echo "=== running $(basename $0) ==="
 
 # 备份原来的hosts
 if [ ! -e "/etc/hosts.backup" ]; then
-    sudo mv /etc/hosts /etc/hosts.backup
+    sudo cp /etc/hosts /etc/hosts.backup
 fi
 
-cat hosts hosts-ext > hosts-all
+sudo cat hosts hosts-ext > hosts-all
 sudo cp hosts-all /etc/hosts
 rm hosts-all
 
