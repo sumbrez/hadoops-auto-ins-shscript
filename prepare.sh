@@ -37,7 +37,7 @@ sudo apt-get -y install expect
 
 # sudo权限和NOPASSWD权限 # sudo adduser $uname sudo
 sudp cp /etc/sudoers /etc/sudoers.backup
-sudo sed -i "s/${uname}.*ALL=(ALL:ALL).*ALL/${uname}\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
+# sudo sed -i "s/${uname}.*ALL=(ALL:ALL).*ALL/${uname}\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
 sudo sed -i "/${uname}/d" /etc/sudoers
 sudo echo "${uname}\tALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 sudo sed -i "s/.*sudo.*ALL=(ALL:ALL).*ALL/sudo\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers # server版需要此操作
