@@ -11,5 +11,8 @@ sudo cat hosts hosts-ext > hosts-all
 sudo cp hosts-all /etc/hosts
 rm hosts-all
 
+hname=`hostname`
+sudo echo "127.0.0.1 $hname" >> /etc/hosts
+
 #sudo cp hosts /etc/hosts
 #sudo cat hosts-ext >> /etc/hosts
