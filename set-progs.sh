@@ -39,6 +39,32 @@ cat > $HADOOP_HOME/etc/hadoop/core-site.xml << EOF
 		<name>fs.defaultFS</name>
 		<value>hdfs://${master}:9000</value>
 	</property>
+
+	<!-- for hue, web mng -->
+	<property>
+		<name>hadoop.proxyuser.hadoop.hosts</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.hadoop.groups</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.hue.hosts</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.hue.groups</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.hdfs.hosts</name>
+		<value>*</value>
+	</property>
+	<property>
+		<name>hadoop.proxyuser.hdfs.groups</name>
+		<value>*</value>
+	</property> 
 </configuration>
 EOF
 
@@ -62,6 +88,12 @@ cat > $HADOOP_HOME/etc/hadoop/hdfs-site.xml << EOF
 	<property>
 		<name>dfs.datanode.data.dir</name>
 		<value>${tmpdir}/hadoop/dfs/data</value>
+	</property>
+
+	<!-- for hue, web mng -->
+	<property>
+		<name>dfs.webhdfs.enabled</name>
+		<value>true</value>
 	</property>
 </configuration>
 EOF
@@ -118,6 +150,21 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 	</property>
 	<property>
 		<name>phoenix.schema.mapSystemTablesToNamespace</name>
+		<value>true</value>
+	</property>
+
+	<!-- for hue -->
+	<property>
+		<name>hbase.rest.support.proxyuser</name>
+		<value>true</value>
+	</property>
+	<!-- this seems to be useless or imcomplete -->
+	<property>
+		<name>hbase.regionserver.thrift.http</name>
+		<value>true</value>
+	</property>
+	<property>
+		<name>hbase.regionserver.thrift.framed</name>
 		<value>true</value>
 	</property>
 </configuration>

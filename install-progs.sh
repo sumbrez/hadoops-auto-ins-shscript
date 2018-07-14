@@ -12,7 +12,7 @@ for file in `ls $prog_subdir`; do
 	 	# 使用prog子目录时必须用此形式，否则只匹配上apache-phoenix
 	 	if [[ $file == *$prog*.tar.gz ]] || [[ $file == *$prog*.taz ]]; then
 		#if [ $file = *$prog*.tar.gz -o $file = *$prog*.tgz ]; then
-			echo "*** unpacking "$file" to "$libdir/$prog" ***"
+			echo "*** unpacking $file to $libdir/$prog ***"
 			sudo mkdir -p $libdir/$prog
 			if [[ $ins_ornot != nocover ]]; then
 				sudo rm -rf $libdir/$prog/* # 删除原来的，避免出现多个版本影响`ls $libdir/$prog`结果

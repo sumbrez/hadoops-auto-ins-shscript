@@ -5,7 +5,7 @@ echo "=== running $(basename $0) ==="
 source config
 
 # 删除原有的环境变量
-sed '/JAVA_HOME/'d ~/.bashrc | sed '/HADOOP_HOME/d' | sed '/HBASE_HOME/d' | sed '/PHOENIX_HOME/d' > ~/.bashrc.tmp
+sed '/JAVA_HOME/'d ~/.bashrc | sed '/HADOOP_HOME/d' | sed '/HBASE_HOME/d' | sed '/PHOENIX_HOME/d'  | sed '/PIG_HOME/d' > ~/.bashrc.tmp
 cat ~/.bashrc.tmp > ~/.bashrc
 rm ~/.bashrc.tmp
 
@@ -49,10 +49,10 @@ if [[ -n `echo "${prog_arr[*]}" | grep phoenix` ]]; then
 fi
 
 if [[ -n `echo "${prog_arr[*]}" | grep pig` ]]; then
-    PIG_INSTALL=$libdir/pig/`ls $libdir/pig`
+    PIG_HOME=$libdir/pig/`ls $libdir/pig`
     if [ $? -eq 0 ]; then
-        echo "export PIG_INSTALL=$PIG_INSTALL" >> ~/.bashrc
-        echo 'export PATH=$PATH:$PIG_INSTALL/bin' >> ~/.bashrc
+        echo "export PIG_HOME=$PIG_HOME" >> ~/.bashrc
+        echo 'export PATH=$PATH:$PIG_HOME/bin' >> ~/.bashrc
     fi
 fi
 
@@ -61,4 +61,4 @@ unset JAVA_HOME
 unset HADOOP_HOME
 unset HBASE_HOME
 unset PHOENIX_HOME
-unset PIG_INSTALL
+unset PIG_HOME
