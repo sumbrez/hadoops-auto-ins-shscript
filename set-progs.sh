@@ -160,12 +160,20 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 	</property>
 	<!-- this seems to be useless or imcomplete -->
 	<property>
-		<name>hbase.regionserver.thrift.http</name>
+		<name>hbase.thrift.support.proxyuser</name>
 		<value>true</value>
 	</property>
 	<property>
-		<name>hbase.regionserver.thrift.framed</name>
+		<name>hbase.regionserver.thrift.http</name>
 		<value>true</value>
+	</property>
+	<property> <!-- true, and hue.ini use framed -->
+		<name>hbase.regionserver.thrift.framed</name>
+		<value>false</value>
+	</property>
+	<property>
+		<name>hbase.regionserver.thrift.server.type</name>
+		<value>TThreadPoolServer</value>
 	</property>
 </configuration>
 EOF
