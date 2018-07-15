@@ -1,0 +1,32 @@
+sudo apt-get install build-essential libpython-dev libpython2.7-dev \
+libxslt-dev libffi-dev libssl-dev libldap-dev zlib1g-dev libxml2 \
+libsasl2-dev mysql-server libmysqlclient-dev libkrb5-dev \
+libsqlite3-dev libgmp-dev python-pip -y
+
+sudo apt-get install python2.7-dev make libkrb5-dev libxml2-dev libffi-dev \
+libxslt-dev libsqlite3-dev libssl-dev libldap2-dev python-pip -y
+
+sudo apt-get install ant gcc g++ libkrb5-dev libffi-dev libmysqlclient-dev \
+libssl-dev libsasl2-dev libsasl2-modules-gssapi-mit libsqlite3-dev \
+libtidy-0.99-0 libxml2-dev libxslt-dev make libldap2-dev maven python-dev \
+python-setuptools libgmp3-dev -y
+
+sudo apt-get install libtidy-dev
+
+#############################
+
+# vi ~/.pip/pip.conf
+mkdir ~/.pip
+cat > ~/.pip/pip.conf << EOF
+[global]
+index-url = http://pypi.douban.com/simple
+trusted-host = pypi.douban.com
+EOF
+
+sudo python -m pip install --upgrade --force pip 
+pip install logilab-astng
+#pip install ipython==0.10
+
+#############################
+
+hbase-daemon.sh start thrift
