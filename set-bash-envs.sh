@@ -5,7 +5,7 @@ echo "=== running $(basename $0) ==="
 source config
 
 # 删除原有的环境变量
-sed '/JAVA_HOME/'d ~/.bashrc | sed '/HADOOP_HOME/d' | sed '/HBASE_HOME/d' | sed '/PHOENIX_HOME/d'  | sed '/PIG_HOME/d' > ~/.bashrc.tmp
+sed '/JAVA_HOME/'d ~/.bashrc | sed '/HADOOP_HOME/d' | sed '/HBASE_HOME/d' | sed '/PHOENIX_HOME/d' | sed '/PIG_HOME/d' > ~/.bashrc.tmp
 cat ~/.bashrc.tmp > ~/.bashrc
 rm ~/.bashrc.tmp
 
@@ -44,7 +44,10 @@ if [[ -n `echo "${prog_arr[*]}" | grep phoenix` ]]; then
         echo 'export PATH=$PATH:$PHOENIX_HOME/bin' >> ~/.bashrc
         # echo 'export CLASSPATH=$CLASSPATH:$PHOENIX_HOME' >> ~/.bashrc
         # 将client.jar加入CP以便直接运行sqlline.py
-        echo 'export CLASSPATH=$CLASSPATH:$PHOENIX_HOME/'`ls $PHOENIX_HOME | grep -v thin | grep client.jar` >> ~/.bashrc
+        phoenix_jar=`ls $PHOENIX_HOME | grep -v thin | grep client.jar`
+        echo 'export CLASSPATH=$CLASSPATH:$PHOENIX_HOME/'$phoenix_jar >> ~/.bashrc
+        ln -s $PHOENIX_HOME/$phoenix_jar $JAVA_HOME/jre/lib/ext/
+        ln -s $HBASE_HOME/conf $JAVA_HOME/jre/lib/ext/
     fi
 fi
 

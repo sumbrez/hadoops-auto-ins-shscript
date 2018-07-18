@@ -179,7 +179,7 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 EOF
 
 # set_phoenix_hbase_site
-cp $HBASE_HOME/conf/hbase-site.xml $PHOENIX_HOME/bin/hbase-site.xml
+ln -s $HBASE_HOME/conf/hbase-site.xml $PHOENIX_HOME/bin/
 
 # 避免和~/.bashrc变量混淆、冲突
 unset JAVA_HOME
