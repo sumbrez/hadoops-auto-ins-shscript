@@ -46,8 +46,9 @@ if [[ -n `echo "${prog_arr[*]}" | grep phoenix` ]]; then
         # 将client.jar加入CP以便直接运行sqlline.py
         phoenix_jar=`ls $PHOENIX_HOME | grep -v thin | grep client.jar`
         echo 'export CLASSPATH=$CLASSPATH:$PHOENIX_HOME/'$phoenix_jar >> ~/.bashrc
-        ln -s $PHOENIX_HOME/$phoenix_jar $JAVA_HOME/jre/lib/ext/
-        ln -s $HBASE_HOME/conf $JAVA_HOME/jre/lib/ext/
+        # 以下两个影响hadoop启动（似乎是phoenix_jar，但少一个就无法直接运行目标jar）
+        #ln -s $PHOENIX_HOME/$phoenix_jar $JAVA_HOME/jre/lib/ext/
+        #ln -s $HBASE_HOME/conf $JAVA_HOME/jre/lib/ext/
     fi
 fi
 

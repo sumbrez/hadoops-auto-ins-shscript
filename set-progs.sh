@@ -12,7 +12,7 @@ PHOENIX_HOME=$libdir/phoenix/"`ls $libdir/phoenix`"
 
 # source ~/.bashrc # 除在本地外无效
 
-# 复制phoenix server jar到hbase lib
+# 复制phoenix server jar到hbase lib，此处可用ln -s
 sudo cp $PHOENIX_HOME/phoenix-*-HBase-*-server.jar $HBASE_HOME/lib/
 
 # set_hadoop_env
@@ -179,7 +179,7 @@ cat > $HBASE_HOME/conf/hbase-site.xml << EOF
 EOF
 
 # set_phoenix_hbase_site
-ln -s $HBASE_HOME/conf/hbase-site.xml $PHOENIX_HOME/bin/
+cp $HBASE_HOME/conf/hbase-site.xml $PHOENIX_HOME/bin/
 
 # 避免和~/.bashrc变量混淆、冲突
 unset JAVA_HOME
