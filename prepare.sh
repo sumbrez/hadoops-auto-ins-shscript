@@ -14,16 +14,10 @@ fi
 # 修改更新源
 sudo cat > /etc/apt/sources.list <<- EOF
 # deb cdrom:[Ubuntu 16.04 LTS _Xenial Xerus_ - Release amd64 (20160420.1)]/ xenial main restricted
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial universe
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates universe
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial multiverse
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates multiverse
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security universe
-deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-security main restricted universe multiverse
+# deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ xenial-backports main restricted universe multiverse
 EOF
 # 让更新源生效
 sudo apt-get update
@@ -36,8 +30,8 @@ sudo apt-get -y install vim
 sudo apt-get -y install expect
 
 # sudo权限和NOPASSWD权限 # sudo adduser $uname sudo
-sudp cp /etc/sudoers /etc/sudoers.backup
+sudo cp /etc/sudoers /etc/sudoers.backup
 # sudo sed -i "s/${uname}.*ALL=(ALL:ALL).*ALL/${uname}\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers
 sudo sed -i "/${uname}/d" /etc/sudoers
-sudo echo "${uname}\tALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+sudo echo -e "${uname}\tALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
 sudo sed -i "s/.*sudo.*ALL=(ALL:ALL).*ALL/sudo\tALL=(ALL:ALL) NOPASSWD:ALL/" /etc/sudoers # server版需要此操作
