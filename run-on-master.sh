@@ -17,7 +17,7 @@ do
 
 	if [ "$hostname" = `hostname` ]; then # 本机
 		# 生成本机ssh key
-		rm ~/.ssh/*
+		rm -rf ~/.ssh/*
 		ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 		cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys # 默认没有au_keys，cp和cat均可
 
