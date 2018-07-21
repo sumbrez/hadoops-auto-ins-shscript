@@ -9,7 +9,7 @@ fi
 
 hname=`hostname`
 sudo cat hosts hosts-ext > hosts-all
-sudo echo "127.0.0.1 $hname" >> hosts-all
+#sudo echo "127.0.0.1 $hname" >> hosts-all
 sudo cp hosts-all /etc/hosts
 rm hosts-all
 
