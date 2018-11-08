@@ -48,7 +48,7 @@ do
 		spawn -noecho ssh $uname@$hostname {if [ ! -d .ssh ]; then mkdir .ssh; fi}
 		expect {
 			"(yes/no)" { send "yes\r"; exp_continue  }
-			"password:" { send "$passwd\r"; exp_continue }
+			"password" { send "$passwd\r"; exp_continue }
 			eof
 		}
 		EOF
@@ -60,7 +60,7 @@ do
 		set timeout -1
 		spawn -noecho sh -c {scp ~/.ssh/id_rsa.pub $uname@$hostname:~/.ssh/authorized_keys}
 		expect {
-			"password:" { send "$passwd\r"; exp_continue }
+			"password" { send "$passwd\r"; exp_continue }
 			eof
 		}
 		EOF
@@ -71,7 +71,7 @@ do
 		set timeout -1
 		spawn -noecho ssh -t -t $uname@$hostname {sudo service ssh restart; sudo service sshd restart}
 		expect {
-			"password:" { send "$passwd\r"; exp_continue }
+			"password" { send "$passwd\r"; exp_continue }
 			eof
 		}
 		EOF
@@ -86,21 +86,30 @@ do
 		# spawn -c依然不支持$(basename $0)
 		/usr/bin/expect <<- EOF
 		set timeout -1
-		spawn -noecho sh -c {scp * $uname@$hostname:} # 不复制目录
-		#spawn -noecho sh -c {scp -r * $uname@$hostname:} # 复制目录
+		#spawn -noecho sh -c {scp * $uname@$hostname:} # 不复制目录
+		spawn -noecho sh -c {scp -r * $uname@$hostname:} # 复制目录
 		expect {
-			"password:" { send "$passwd\r"; exp_continue }
+			"password" { send "$passwd\r"; exp_continue }
 			eof
 		}
 		EOF
 		echo ''
 
-		ssh -t -t $uname@$hostname 'chmod -R 755 *; ./run-remain.sh $ins_ornot'
+		/usr/bin/expect <<- EOF
+		set timeout -1
+		spawn -noecho ssh -t -t $uname@$hostname {chmod -R 755 *; ./run-remain.sh $ins_ornot}
+		expect {
+			"password" { send "$passwd\r"; exp_continue }
+			eof
+		}
+		EOF
+		echo ''
+		
 		# ssh到slave上更新.bashrc
 		/usr/bin/expect <<- EOF
 		set timeout 1
 		spawn -noecho ssh $uname@$hostname
-		expect "password:" { send "$passwd\r" }
+		expect "password" { send "$passwd\r" }
 		expect ":~$"
 		send "source ~/.bashrc\r"
 		expect ":~$"
